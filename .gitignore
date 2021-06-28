@@ -1,0 +1,6 @@
+QASE.iml
+.idea
+taget
+
+# Project exclude paths
+/target/
