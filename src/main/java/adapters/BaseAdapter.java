@@ -1,22 +1,20 @@
 package adapters;
 
 import com.google.gson.Gson;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class BaseAdapter {
 
-    public final static String CORRECT_EMAIL = "arimelka@yandex.by";
-    public final static String CORRECT_PASSWORD = "Q033008061zxcv";
-    public final static String TOKEN = "70c308e9c09568164087e115ad6d245daeec9f57";
     public static final String BASE_URL = "https://api.qase.io/v1/";
+    public static final String CONTENT_TYPE = "application/json";
     Gson converter = new Gson();
 
-    public String get(String url) {
+    public String get(String token, String url) {
         return
-                given()
-                        .header("Token", TOKEN)
-                        .header("Content-Type", "application/json")
+                given().contentType(ContentType.JSON)
+                        .header("Token", token)
                 .when()
                         .get(BASE_URL + url)
                 .then()
@@ -24,11 +22,11 @@ public class BaseAdapter {
                         .extract().body().asString();
     }
 
-    public Response post(String url, String body){
+    public Response post(String token, String url, String body){
         return
                 given()
-                        .header("Token", TOKEN)
-                        .header("Content-Type", "application/json")
+                        .header("Token", token)
+                        .header("Content-Type", CONTENT_TYPE)
                         .body(body)
                 .when()
                         .post(BASE_URL + url)
@@ -36,11 +34,11 @@ public class BaseAdapter {
                         .log().all()
                         .extract().response();
     }
-    public Response delete(String url){
+    public Response delete(String token, String url){
         return
-        given()//.contentType(ContentType.JSON)
-                .header("Token", TOKEN)
-                .header("Content-Type", "application/json")
+        given()
+                .header("Token", token)
+                .header("Content-Type", CONTENT_TYPE)
                 .log().all()
         .when()
                 .delete(BASE_URL + url)
