@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import utils.PropertyReader;
 
 public class QaseTest {
-    String token =System.getenv().getOrDefault("Token", PropertyReader.getProperty("token"));
+    String token = System.getenv().getOrDefault("Token", PropertyReader.getProperty("token"));
 
     @Test
     public void getAllProjectsTest() {
